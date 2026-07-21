@@ -1,4 +1,5 @@
 from src.beam import Beam 
+from src.plotter import BeamPlotter
 
 
 def main():
@@ -40,10 +41,25 @@ def main():
     print(f"V(7.5) = {beam.shear(7.5):.2f} kgf")
 
 
-    x, V = beam.shear_diagram()
 
-    print(x)
-    print(V)
+
+
+    BeamPlotter.plot_shear(beam)
+    
+   
+
+    
+
+
+
+    print()
+    print("Moments")
+
+    for x in [0, 2, 3, 4, 6, 7, 8]:
+        print(f"M({x}) = {beam.moment(x):.2f} kgf·m")
+
+        
+
 
     
 

@@ -65,6 +65,26 @@ class Beam:
                 V -= load.force
 
         return V
+    
+    
+    
+
+    def moment(self, x: float) -> float:
+
+        if x < 0 or x > self.length:
+            raise ValueError("The position x is outside the beam.")
+
+        M = self.reaction_A * x
+
+        for load in self.loads:
+
+            if load.position <= x:
+                M -= load.force * (x - load.position)
+
+        return M
+    
+    
+    
    
 
 
@@ -73,13 +93,33 @@ class Beam:
     # Post-processing
     # ==========================================
 
-    def shear_diagram(self, step: float = 0.10):
+    
+    def shear_diagram(self):
 
-        x_values = []
+     x_values = []
+     V_values = []
 
-        V_values = []
+     V = self.reaction_A
 
-        return x_values, V_values
+     x_values.append(0)
+     V_values.append(V)
+
+     for load in self.loads:
+         x_values.append(load.position)
+         V_values.append(V)
+
+         V -= load.force
+
+         x_values.append(load.position)
+         V_values.append(V)
+
+     x_values.append(self.length)
+     V_values.append(V)
+
+
+     return x_values, V_values
+    
+    
 
     
    
